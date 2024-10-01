@@ -12,7 +12,7 @@ COPY pom.xml /home/app
 RUN mvn -f /home/app/pom.xml clean package
 
 # Etapa de runtime
-FROM openjdk:17-jdk-slim as grpc_service
+FROM openjdk:17-jdk-slim
 
 # Copia o arquivo JAR gerado da etapa de build
 COPY --from=build /home/app/target/file-grpc-service-1.0-SNAPSHOT.jar /usr/local/lib/file-grpc-service.jar
@@ -21,7 +21,7 @@ COPY --from=build /home/app/target/file-grpc-service-1.0-SNAPSHOT.jar /usr/local
 #EXPOSE 50051
 
 # Define o comando de entrada para rodar a aplicação
-ENTRYPOINT ["java", "-jar", "/usr/local/lib/file-grpc-service.jar"]
+#ENTRYPOINT ["java", "-jar", "/usr/local/lib/file-grpc-service.jar"]
 
 # Copiar configuração do NGINX
 COPY nginx.conf /etc/nginx/nginx.conf
