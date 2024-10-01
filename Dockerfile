@@ -28,7 +28,7 @@ RUN apt-get update && apt-get install -y nginx
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Expor a porta que o NGINX vai escutar
-EXPOSE 80
+EXPOSE 443
 
 # Iniciar o NGINX e o servidor gRPC
 CMD service nginx start #&& java -jar /usr/local/lib/file-grpc-service.jar
