@@ -25,5 +25,5 @@ ENTRYPOINT ["java", "-jar", "/usr/local/lib/file-grpc-service.jar"]
 
 FROM envoyproxy/envoy:v1.19.1 AS envoy
 COPY envoy.yaml /etc/envoy/envoy.yaml
-EXPOSE 8080
+EXPOSE 5000
 CMD ["envoy", "-c", "/etc/envoy/envoy.yaml", "--service-cluster", "grpc_service"]
