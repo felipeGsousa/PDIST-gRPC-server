@@ -15,7 +15,7 @@ RUN mvn -f /home/app/pom.xml clean package
 FROM openjdk:17-jdk-slim
 
 # Copia o arquivo JAR gerado da etapa de build
-COPY --from=build /home/app/target/my-grpc-server.jar /usr/local/lib/my-grpc-server.jar
+COPY --from=build /home/app/target/file-grpc-service.jar /usr/local/lib/file-grpc-service.jar
 
 # Exponha a porta usada pelo gRPC
 EXPOSE 50051
