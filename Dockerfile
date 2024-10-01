@@ -1,26 +1,10 @@
-# Etapa de construção
-FROM maven:3.8.6-eclipse-temurin-17 AS build
-WORKDIR /app
+FROM maven:3.8.1-jdk-11 AS build
+COPY src /home/app/src
+COPY pom.xml /home/app
+RUN mvn -f /home/app/pom.xml clean package
 
-# Copie o arquivo pom.xml e as dependências para o contexto de construção
-COPY pom.xml .
-RUN mvn dependency:go-offline
-
-# Copie o restante do código do aplicativo
-COPY src ./src
-
-# Compile o aplicativo
-RUN mvn clean package -DskipTests
-
-# Etapa de execução
-FROM openjdk:17-jdk-slim
-WORKDIR /app
-
-# Copie o arquivo JAR da etapa de construção
-COPY --from=build /app/target/*.jar app.jar
-
-# Exponha a porta que o serviço irá escutar
+# Etapa de runtime
+FROM openjdk:11-jre-slim
+COPY --from=build /home/app/target/my-grpc-server.jar /usr/local/lib/my-grpc-server.jar
 EXPOSE 50051
-
-# Comando para iniciar o aplicativo
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "/usr/local/lib/my-grpc-server.jar"]
