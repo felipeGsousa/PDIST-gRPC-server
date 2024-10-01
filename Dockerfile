@@ -12,7 +12,7 @@ COPY pom.xml /home/app
 RUN mvn -f /home/app/pom.xml clean package
 
 # Etapa de runtime
-FROM openjdk:17-jdk-slim
+FROM openjdk:17-jdk-slim as grpc_service
 
 # Copia o arquivo JAR gerado da etapa de build
 COPY --from=build /home/app/target/file-grpc-service-1.0-SNAPSHOT.jar /usr/local/lib/file-grpc-service.jar
@@ -22,3 +22,7 @@ EXPOSE 50051
 
 # Define o comando de entrada para rodar a aplicação
 ENTRYPOINT ["java", "-jar", "/usr/local/lib/file-grpc-service.jar"]
+
+FROM envoyproxy/envoy:v1.19.1 AS envoy
+COPY envoy.yaml /etc/envoy/envoy.yaml
+CMD ["envoy", "-c", "/etc/envoy/envoy.yaml", "--service-cluster", "grpc_service"]
