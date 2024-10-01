@@ -14,6 +14,8 @@ RUN mvn -f /home/app/pom.xml clean package
 # Etapa de runtime
 FROM openjdk:17-jdk-slim
 
+RUN apt-get update && apt-get install -y nginx
+
 # Copia o arquivo JAR gerado da etapa de build
 COPY --from=build /home/app/target/file-grpc-service-1.0-SNAPSHOT.jar /usr/local/lib/file-grpc-service.jar
 
