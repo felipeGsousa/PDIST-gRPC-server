@@ -38,6 +38,6 @@ static_resources:
               - endpoint:
                   address:
                     socket_address: {
-                        address: https://pdist-grpc-server.onrender.com/,
+                        address: https://pdist-grpc-server.onrender.com,
                         port_value: 50051
                     }
