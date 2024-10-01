@@ -32,4 +32,4 @@ COPY nginx.conf /etc/nginx/nginx.conf
 EXPOSE 80
 
 # Iniciar o NGINX e o servidor gRPC
-CMD service nginx start && java -jar /usr/local/lib/my-grpc-server.jar
+CMD service nginx start && java -jar /usr/local/lib/file-grpc-service.jar
