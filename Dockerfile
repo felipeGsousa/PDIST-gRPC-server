@@ -14,21 +14,21 @@ RUN mvn -f /home/app/pom.xml clean package
 # Etapa de runtime
 FROM openjdk:17-jdk-slim
 
-RUN apt-get update && apt-get install -y nginx
+#RUN apt-get update && apt-get install -y nginx
 
 # Copia o arquivo JAR gerado da etapa de build
 COPY --from=build /home/app/target/file-grpc-service-1.0-SNAPSHOT.jar /usr/local/lib/file-grpc-service.jar
 
 # Exponha a porta usada pelo gRPC
-#EXPOSE 50051
+EXPOSE 50051
 # Define o comando de entrada para rodar a aplicação
-#ENTRYPOINT ["java", "-jar", "/usr/local/lib/file-grpc-service.jar"]
+ENTRYPOINT ["java", "-jar", "/usr/local/lib/file-grpc-service.jar"]
 
 # Copiar configuração do NGINX
-COPY nginx.conf /etc/nginx/nginx.conf
+#COPY nginx.conf /etc/nginx/nginx.conf
 
 # Expor a porta que o NGINX vai escutar
-EXPOSE 443 50051
+#EXPOSE 443 50051
 
 # Iniciar o NGINX e o servidor gRPC
-CMD service nginx start #&& java -jar /usr/local/lib/file-grpc-service.jar
+#CMD service nginx start #&& java -jar /usr/local/lib/file-grpc-service.jar
