@@ -28,7 +28,7 @@ COPY --from=build /home/app/target/file-grpc-service-1.0-SNAPSHOT.jar /usr/local
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Expor a porta que o NGINX vai escutar
-EXPOSE 443
+EXPOSE 443 50051
 
 # Iniciar o NGINX e o servidor gRPC
 CMD service nginx start #&& java -jar /usr/local/lib/file-grpc-service.jar
